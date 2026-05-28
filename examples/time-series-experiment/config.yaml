@@ -1,0 +1,138 @@
+# 时间序列预测实验配置
+# 实验日期: 2026-05-27
+
+# ==================== 通用设置 ====================
+experiment:
+  name: "lightweight-ts-forecasting"
+  description: "轻量化时间序列预测方法对比实验"
+  seed: 42
+  device: "cuda:0"
+  mixed_precision: true
+  output_dir: "./outputs"
+
+# ==================== 数据集配置 ====================
+datasets:
+  ETTh1:
+    name: "ETTh1"
+    type: "electricity"
+    data_path: "./data/ETTh1.csv"
+    features: "M"
+    target: "OT"
+    freq: "h"
+    seq_len: 336
+    label_len: 48
+    pred_lens: [96, 192, 336, 720]
+    train_ratio: 0.6
+    val_ratio: 0.2
+    test_ratio: 0.2
+    normalize: true
+    num_vars: 7
+
+  ETTh2:
+    name: "ETTh2"
+    type: "electricity"
+    data_path: "./data/ETTh2.csv"
+    features: "M"
+    target: "OT"
+    freq: "h"
+    seq_len: 336
+    label_len: 48
+    pred_lens: [96, 192, 336, 720]
+    train_ratio: 0.6
+    val_ratio: 0.2
+    test_ratio: 0.2
+    normalize: true
+    num_vars: 7
+
+# ==================== 模型配置 ====================
+models:
+  PatchTST:
+    name: "PatchTST"
+    type: "transformer"
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+    d_model: 512
+    n_heads: 8
+    e_layers: 3
+    d_layers: 2
+    d_ff: 2048
+    dropout: 0.1
+    activation: "gelu"
+    # PatchTST 特有参数
+    patch_len: 16
+    stride: 8
+    padding_patch: "end"
+    revin: true
+    affine: false
+    subtract_last: false
+
+  OurMethod:
+    name: "OurMethod"
+    type: "lightweight_transformer"
+    enc_in: 7
+    dec_in: 7
+    c_out: 7
+    d_model: 256
+    n_heads: 4
+    e_layers: 2
+    d_layers: 1
+    d_ff: 512
+    dropout: 0.1
+    activation: "gelu"
+    # OurMethod 特有参数
+    patch_len: 16
+    stride: 8
+    padding_patch: "end"
+    revin: true
+    # 参数高效微调配置
+    use_lora: true
+    lora_rank: 16
+    lora_alpha: 32
+    use_adapter: false
+    adapter_dim: 64
+    freeze_base: true
+
+# ==================== 训练配置 ====================
+training:
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  max_epochs: 100
+  patience: 10
+  gradient_clip: 1.0
+  warmup_epochs: 5
+  min_lr: 0.000001
+
+  optimizer:
+    type: "AdamW"
+    betas: [0.9, 0.999]
+    eps: 1e-8
+
+  scheduler:
+    type: "cosine"
+    T_max: 100
+    eta_min: 0.000001
+
+# ==================== 评估配置 ====================
+evaluation:
+  metrics:
+    - "mse"
+    - "mae"
+  inverse_transform: true
+  num_runs: 3  # 统计显著性检验
+
+# ==================== 分析配置 ====================
+analysis:
+  significance_test: true
+  test_type: "paired_t"
+  confidence_level: 0.95
+  generate_plots: true
+  plot_format: "png"
+  plot_dpi: 300
+  compare_metrics:
+    - "mse"
+    - "mae"
+    - "params_m"
+    - "train_time_h"
+  improvement_metric: "mse"  # 计算改进百分比的基准指标
