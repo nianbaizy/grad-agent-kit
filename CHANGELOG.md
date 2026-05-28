@@ -4,57 +4,58 @@ All notable changes to GradAgentKit will be documented in this file.
 
 ---
 
-## [1.0.0] - 2026-05-28
+## v0.1.0
 
 ### Added
 
 #### Core Skills
-- **paper-writer** - Generate research paper drafts
-- **experiment-analyzer** - Analyze experiment results
-- **reviewer-simulator** - Simulate peer review
-- **advisor-roaster** - Simulate advisor questioning
-- **academic-deck-builder** - Build presentation decks
-
-#### Documentation
-- Project overview (docs/overview.md)
-- Skill design principles (docs/skill-design-principles.md)
-- Workflow-first agent guide (docs/workflow-first-agent.md)
-- Installation guide (docs/installation.md)
-- Usage guide (docs/usage.md)
-- Roadmap (docs/roadmap.md)
+- Added `paper-writer` skill for generating research paper drafts
+- Added `experiment-analyzer` skill for analyzing experiment results
+- Added `reviewer-simulator` skill for simulating peer review
+- Added `advisor-roaster` skill for simulating advisor questioning
+- Added `academic-deck-builder` skill for building presentation structures
 
 #### Examples
-- **quantization-paper** - Paper writing example
-- **time-series-experiment** - Experiment analysis example
-- **academic-presentation** - Presentation building example
+- Added `quantization-paper` example demonstrating paper writing workflow
+- Added `time-series-experiment` example demonstrating experiment analysis
+- Added `academic-presentation` example demonstrating presentation building
 
-#### Tools
-- **validate-skills.py** - Skill structure validation
-- **generate-skill-index.py** - Auto-generate skill index
+#### Scripts
+- Added `validate-skills.py` for validating skill structure
+- Added `generate-skill-index.py` for auto-generating skill index
+
+#### Documentation
+- Added project overview documentation
+- Added skill design principles guide
+- Added workflow-first agent explanation
+- Added installation guide
+- Added usage guide with examples
+- Added auto-generated skill index
+- Added roadmap for future development
 
 #### Templates
-- Skill template (templates/skill-template/)
-- Workflow template (templates/workflow-template.md)
+- Added skill template for creating new skills
+- Added workflow template for structured workflows
 
 #### Project Files
-- README.md with comprehensive documentation
-- MIT License
-- Contributing guidelines
+- Added comprehensive README.md
+- Added MIT License
+- Added contributing guidelines
+- Added changelog
 
 ---
 
-## [Unreleased]
+## Unreleased
 
 ### Planned
-
 - paper-polisher skill
 - rebuttal-writer skill
 - github-readme-crafter skill
 - experiment-archiver skill
-- CLI tool
+- CLI tool for skill management
 - GitHub Action integration
 - Obsidian plugin
 
 ---
 
-*Changelog - GradAgentKit*
+*Changelog — GradAgentKit*

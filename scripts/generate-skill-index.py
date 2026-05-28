@@ -101,7 +101,7 @@ def extract_skill_info(skill_dir):
             info['use_when'] = when_lines
 
         except Exception as e:
-            print(f"⚠️  Error reading {skill_md_path}: {e}")
+            print(f"[WARN] Error reading {skill_md_path}: {e}")
 
     return info
 
@@ -204,20 +204,20 @@ def main():
     docs_dir = get_docs_directory()
 
     if not skills_dir.exists():
-        print(f"❌ Skills directory not found: {skills_dir}")
+        print(f"[ERROR] Skills directory not found: {skills_dir}")
         sys.exit(1)
 
     # Get all skill directories
     skill_dirs = [d for d in skills_dir.iterdir() if d.is_dir()]
 
     if not skill_dirs:
-        print("⚠️  No skills found in skills directory")
+        print("[WARN] No skills found in skills directory")
         sys.exit(0)
 
     # Extract information from each skill
     skills_info = []
 
-    print("🔍 Scanning skills...\n")
+    print("[SCAN] Scanning skills...\n")
 
     for skill_dir in sorted(skill_dirs):
         skill_name = skill_dir.name
@@ -231,7 +231,7 @@ def main():
         skills_info.append(info)
 
     # Generate index
-    print(f"\n📝 Generating skill index...")
+    print(f"\n[GENERATE] Generating skill index...")
     index_content = generate_skill_index(skills_info)
 
     # Write to docs/skill-index.md
@@ -242,11 +242,11 @@ def main():
         with open(index_path, 'w', encoding='utf-8') as f:
             f.write(index_content)
 
-        print(f"✅ Skill index generated: {index_path}")
+        print(f"[OK] Skill index generated: {index_path}")
         print(f"   Found {len(skills_info)} skills")
 
     except Exception as e:
-        print(f"❌ Error writing {index_path}: {e}")
+        print(f"[ERROR] Error writing {index_path}: {e}")
         sys.exit(1)
 
 
